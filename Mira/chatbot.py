@@ -83,7 +83,7 @@ def getPrediction(doc):
 
 def getAnswer(dictionary):
     dictionary = str(dictionary)
-    with open('answers2.json', 'r') as data_file:
+    with open('answers.json', 'r') as data_file:
         data = json.load(data_file, strict=False)
     return random.choice(data[dictionary])
 
