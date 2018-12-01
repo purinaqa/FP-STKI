@@ -73,7 +73,7 @@ db = mysql.connector.connect(user="root", password='', database="glove")
 cursor = db.cursor(buffered=True)
 
 # load cnn model
-model = load_model("cnn_final_model.h5")
+model = load_model("data-target-model-tl-2.h5")
 
 def getWordEmbedding(word, cursor):
 #     word = word.replace("'", "''")
@@ -143,20 +143,20 @@ def getPrediction(doc):
 
 def getAnswer(dictionary):
     dictionary = str(dictionary)
-    with open('messages.json', 'r') as data_file:
+    with open('answers.json', 'r') as data_file:
         data = json.load(data_file, strict=False)
     return random.choice(data[dictionary])
 
-def isDirectFaq(text):
-    with open("answercls.json", 'r') as answercls:
-        data = json.load(answercls, strict=False)
-
-    for key, val in data.iteritems():
-        if text == val[0]:
-            answercls.close()
-            return True, [key]
-    answercls.close()
-    return False, [-1]
+#def isDirectFaq(text):
+#    with open("answercls.json", 'r') as answercls:
+#        data = json.load(answercls, strict=False)
+#
+#    for key, val in data.iteritems():
+#        if text == val[0]:
+#            answercls.close()
+#            return True, [key]
+#    answercls.close()
+#    return False, [-1]
 
 # function for create tmp dir for download content
 def make_static_tmp_dir():
@@ -195,36 +195,36 @@ def callback():
 def handle_text_message(event):
     text = event.message.text
     sys.stdout.write(text+'\n')
+#
+#    isDirect, id = isDirectFaq(text)
+#    if not isDirect:
+#        id = getPrediction(text)
+#
+#    if len(id) > 1:
+#        act = []
+#        with open("answercls.json", 'r') as answercls:
+#            data = json.load(answercls, strict=False)
+#        print(data[str(id[1])])
+#        for i in id:
+#            i = str(i)
+#            t = data[i][0]
+#            print(t)
+#            print(type(t))
+#            act.append(MessageTemplateAction(label=t, text=t))
+#        # print act
+#        print(MessageTemplateAction(label="Jumlah Kelompok", text="Jumlah Kelompok"))
+#
+#        buttons_template = ButtonsTemplate(title='Hm, Kamu tanya apa sebenarnya?', text='Pilih satu ya hehehe :)', actions=act)
+#        print(buttons_template)
+#
+#        template_message = TemplateSendMessage(
+#            alt_text='Buttons alt text', template=buttons_template)
+#        line_bot_api.reply_message(event.reply_token, template_message)
+#    else:
+    answer = getAnswer(id[0])
+    sys.stdout.write(answer+'\n')
 
-    isDirect, id = isDirectFaq(text)
-    if not isDirect:
-        id = getPrediction(text)
-
-    if len(id) > 1:
-        act = []
-        with open("answercls.json", 'r') as answercls:
-            data = json.load(answercls, strict=False)
-        print(data[str(id[1])])
-        for i in id:
-            i = str(i)
-            t = data[i][0]
-            print(t)
-            print(type(t))
-            act.append(MessageTemplateAction(label=t, text=t))
-        # print act
-        print(MessageTemplateAction(label="Jumlah Kelompok", text="Jumlah Kelompok"))
-
-        buttons_template = ButtonsTemplate(title='Hm, Kamu tanya apa sebenarnya?', text='Pilih satu ya hehehe :)', actions=act)
-        print(buttons_template)
-
-        template_message = TemplateSendMessage(
-            alt_text='Buttons alt text', template=buttons_template)
-        line_bot_api.reply_message(event.reply_token, template_message)
-    else:
-        answer = getAnswer(id[0])
-        sys.stdout.write(answer+'\n')
-
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=answer))
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=answer))
 
 if __name__ == "__main__":
     arg_parser = ArgumentParser(
