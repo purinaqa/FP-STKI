@@ -13,7 +13,7 @@ from keras.models import load_model
 static_tmp_path = os.path.join(os.path.dirname(__file__), 'static', 'tmp')
 db = mysql.connector.connect(user="root", password='', database="glove")
 cursor = db.cursor(buffered=True)
-model = load_model("data-target-model-wtl.h5")
+model = load_model("data-target-model-tl-2.h5")
 
 def getWordEmbedding(word, cursor):
 #     word = word.replace("'", "''")
@@ -83,7 +83,7 @@ def getPrediction(doc):
 
 def getAnswer(dictionary):
     dictionary = str(dictionary)
-    with open('data_islamicQA.json', 'r') as data_file:
+    with open('answers.json', 'r') as data_file:
         data = json.load(data_file, strict=False)
     return random.choice(data[dictionary])
 
