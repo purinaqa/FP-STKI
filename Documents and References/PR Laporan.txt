@@ -1,0 +1,15 @@
+-pengucapan piss-ktb ga perlu di ringkasan (implisit)
+-ringkasan:
+	-problem
+	-tujuan
+	-metode
+	-hasil
+	-kesimpulan
+-problem yg dipecahkan lebih diperjelas dari point2 utama -> misal dari data bentuknya gini
+-sedang bangun ini...problemnya ini ini ini,
+-hasil: hasil chat yg jawabannya bener dan salah
+
+PPT:
+-gambar yg relevan
+-6x7 -> 6 baris 7 kata, cuma clue dan keyword kata2 penting aja
+-hasil2 sama visualisasinya ditampilin di ppt
